@@ -39,11 +39,11 @@ namespace ConsoleAppSquareMaster
             }
             return squares;
         }
-        public bool[,] BuildWorld2(int maxy,int maxx)
+        public bool[,] BuildWorld2(int maxy,int maxx,double coverage)
         {
             bool[,] squares = new bool[maxx, maxy];
             int seeds = 5;
-            int coverageRequired =(int)( 0.40*maxx*maxy);//procent
+            int coverageRequired =(int)(coverage*maxx*maxy);//procent
             int currentCoverage = 0;
             int x, y;
             List<(int, int)> list = new();

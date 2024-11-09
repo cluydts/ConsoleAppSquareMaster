@@ -7,13 +7,30 @@
             Console.WriteLine("Hello, World!");
             //WorldBuilder wb=new WorldBuilder();
             World world = new World();
-            var w=world.BuildWorld2(100,100);
+            var w=world.BuildWorld2(100,100,0.60);
             for (int i = 0; i < w.GetLength(1); i++)
             {
                 for(int j = 0; j < w.GetLength(0); j++)
                 {
                     char ch;
                     if (w[j, i]) ch = '*'; else ch = ' ';
+                    Console.Write(ch);
+                }
+                Console.WriteLine();
+            }
+            WorldConquer wq=new WorldConquer(w);
+            var ww=wq.Conquer(4, 20000);
+            for (int i = 0; i < ww.GetLength(1); i++)
+            {
+                for (int j = 0; j < ww.GetLength(0); j++)
+                {
+                    string ch;
+                    switch (ww[j, i])
+                    {
+                        case -1: ch = " "; break;
+                        case 0: ch = "."; break;
+                        default: ch = ww[j, i].ToString(); break;
+                    }
                     Console.Write(ch);
                 }
                 Console.WriteLine();
