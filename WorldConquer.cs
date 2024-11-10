@@ -12,7 +12,7 @@ namespace ConsoleAppSquareMaster
         private bool[,] world;
         private int[,] worldempires;
         private int maxx, maxy;
-        private Random random = new Random();
+        private Random random = new Random(1);
 
         public WorldConquer(bool[,] world)
         {
@@ -62,7 +62,7 @@ namespace ConsoleAppSquareMaster
                             }
                             break;
                         case 1:
-                            if (x>1 && worldempires[x - 1, y] == 0)
+                            if (x>0 && worldempires[x - 1, y] == 0)
                             {
                                 worldempires[x - 1, y] = e;
                                 empires[e].Add((x - 1, y));
@@ -76,7 +76,7 @@ namespace ConsoleAppSquareMaster
                             }
                             break;
                         case 3:
-                            if (y >1 && worldempires[x, y-1] == 0)
+                            if (y >0 && worldempires[x, y-1] == 0)
                             {
                                 worldempires[x, y-1] = e;
                                 empires[e].Add((x, y-1));

@@ -19,7 +19,7 @@
                 Console.WriteLine();
             }
             WorldConquer wq=new WorldConquer(w);
-            var ww=wq.Conquer(4, 20000);
+            var ww=wq.Conquer(9, 50000);
             for (int i = 0; i < ww.GetLength(1); i++)
             {
                 for (int j = 0; j < ww.GetLength(0); j++)
@@ -35,6 +35,8 @@
                 }
                 Console.WriteLine();
             }
+            BitmapWriter bmw = new BitmapWriter();
+            bmw.DrawWorld(ww);
         }
     }
 }
