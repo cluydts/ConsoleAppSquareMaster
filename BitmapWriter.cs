@@ -22,7 +22,6 @@ namespace ConsoleAppSquareMaster
 
             int delta = drawingFactor / 2;
             Color color;
-            //Pen p = new Pen(Color.Green, 1);
             for (int x = 0; x < world.GetLength(0); x++)
                 for (int y = 0; y < world.GetLength(1); y++)
                 {

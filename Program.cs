@@ -5,21 +5,21 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
-            //WorldBuilder wb=new WorldBuilder();
             World world = new World();
             var w=world.BuildWorld2(100,100,0.60);
-            for (int i = 0; i < w.GetLength(1); i++)
-            {
-                for(int j = 0; j < w.GetLength(0); j++)
-                {
-                    char ch;
-                    if (w[j, i]) ch = '*'; else ch = ' ';
-                    Console.Write(ch);
-                }
-                Console.WriteLine();
-            }
-            WorldConquer wq=new WorldConquer(w);
-            var ww=wq.Conquer(9, 50000);
+            //var w = world.BuildWorld1(100, 100);
+            //for (int i = 0; i < w.GetLength(1); i++)
+            //{
+            //    for(int j = 0; j < w.GetLength(0); j++)
+            //    {
+            //        char ch;
+            //        if (w[j, i]) ch = '*'; else ch = ' ';
+            //        Console.Write(ch);
+            //    }
+            //    Console.WriteLine();
+            //}
+            WorldConquer wq = new WorldConquer(w);
+            var ww = wq.Conquer3(5, 25000);
             for (int i = 0; i < ww.GetLength(1); i++)
             {
                 for (int j = 0; j < ww.GetLength(0); j++)
