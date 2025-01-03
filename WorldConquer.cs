@@ -33,6 +33,8 @@ namespace ConsoleAppSquareMaster
          *          a new location is selected by picking a random adjacent location
          *          if that location is within the boundary of the map and not occupied by an empire, the location is assigned to the empire
          */
+
+
         public int[,] Conquer1(int nEmpires, int turns)
         {
             Dictionary<int, List<(int, int)>> empires = new(); //key is the empire id, value is the list of cells (x,y) the empire controls
@@ -277,6 +279,16 @@ namespace ConsoleAppSquareMaster
             if (y<0) return false;
             if (y>= world.GetLength(1)) return false;
             return true;
+        }
+
+        public int[,] getWorldEmpires()
+        {
+            return worldempires;
+        }
+
+        public bool[,] GetWorld()
+        {
+            return world;
         }
     }
 }
