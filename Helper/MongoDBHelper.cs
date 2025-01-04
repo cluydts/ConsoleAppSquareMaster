@@ -33,7 +33,14 @@ namespace ConsoleAppSquareMaster.Helper
         }
         public async Task<List<WorldResult>> GetAllWorldResultsAsync()
         {
-            return await _resultCollection.Find(_ => true).ToListAsync();
+            return await _resultCollection.Find(_ => true)
+                .Project<WorldResult>(Builders<WorldResult>.Projection.Exclude("_id"))
+                .ToListAsync(); ;
+        }
+
+        public async Task<List<WorldModel>> GetAllWorldModelsAsync()
+        {
+            return await _worldCollection.Find(_ => true).ToListAsync();
         }
     }
 }

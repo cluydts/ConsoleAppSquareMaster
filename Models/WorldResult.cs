@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace ConsoleAppSquareMaster.Models
 {
     public class WorldResult
     {
+        [BsonIgnore]
         public string WorldId { get; set; } // Verwijzing naar WorldModel.Id
         public List<EmpireResult> Empires { get; set; } = new();
     }

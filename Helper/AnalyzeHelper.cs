@@ -59,7 +59,7 @@ namespace ConsoleAppSquareMaster.Helper
         public async Task RunSimulationsFromDatabase(int simulationsPerWorld)
         {
             // Haal alle werelden op
-            var worlds = await _dbHelper.GetAllWorldResultsAsync();
+            var worlds = await _dbHelper.GetAllWorldModelsAsync();
 
             foreach (var world in worlds)
             {
@@ -69,28 +69,28 @@ namespace ConsoleAppSquareMaster.Helper
                 {
 
 
-                    // Genereer een kopie van de wereld
+
                     var worldCopy = (bool[,])world.Data.Clone();
                     WorldConquer conquer = new WorldConquer(worldCopy);
 
-                    // Maak rijken met verschillende strategieën
-                    List<Empire> empires = new()
-                {
-                    EmpireFactory.CreateEmpire(1, "Conquer1"),
-                    EmpireFactory.CreateEmpire(2, "Conquer2"),
-                    EmpireFactory.CreateEmpire(3, "Conquer3")
-                };
 
-                    // Simuleer verovering
+                    List<Empire> empires = new()
+                    {
+                        EmpireFactory.CreateEmpire(1, "Conquer1"),
+                        EmpireFactory.CreateEmpire(2, "Conquer2"),
+                        EmpireFactory.CreateEmpire(3, "Conquer3")
+                    };
+
+
                     foreach (var empire in empires)
                     {
                         empire.ExecuteConquer(conquer, 10000);
                     }
 
-                    // Bereken resultaten
+
                     var result = AnalyzeHelper.AnalyzeWorld(conquer.getWorldEmpires(), world, empires);
 
-                    // Sla resultaten op
+
                     await _dbHelper.SaveWorldResultAsync(result);
 
                     Console.WriteLine($"Resultaten voor simulatie {sim + 1} opgeslagen.");
@@ -98,6 +98,34 @@ namespace ConsoleAppSquareMaster.Helper
             }
 
             Console.WriteLine("Alle simulaties zijn voltooid!");
+        }
+
+        public static async Task<Dictionary<string, double>> CalculateAveragePerformance(MongoDBHelper dbHelper)
+        {
+            var allResults = await dbHelper.GetAllWorldResultsAsync();
+
+            Dictionary<string, (int TotalCells, int Count)> strategyStats = new();
+
+            foreach (var result in allResults)
+            {
+                foreach (var empire in result.Empires)
+                {
+                    if (!strategyStats.ContainsKey(empire.Strategy))
+                    {
+                        strategyStats[empire.Strategy] = (0, 0);
+                    }
+
+                    strategyStats[empire.Strategy] = (
+                        strategyStats[empire.Strategy].TotalCells + empire.ConqueredCells,
+                        strategyStats[empire.Strategy].Count + 1
+                    );
+                }
+            }
+
+            return strategyStats.ToDictionary(
+                kvp => kvp.Key,
+                kvp => (double)kvp.Value.TotalCells / kvp.Value.Count
+            );
         }
     }
 }
